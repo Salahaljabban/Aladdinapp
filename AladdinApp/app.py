@@ -117,7 +117,7 @@ def register():
             return redirect(url_for('register'))
 
         # Hash the password
-        hashed_password = generate_password_hash(password, method='sha256')
+        hashed_password = generate_password_hash(password, method='scrypt')
 
         # Create a new user
         new_user = User(username=username, password=hashed_password, email=email)
@@ -390,7 +390,7 @@ def init_database():
 
     if not admin_user:
         # Create the admin user with a default password
-        hashed_password = generate_password_hash('admin', method='sha256')
+        hashed_password = generate_password_hash('admin', method='scrypt')
         admin_user = User(username='admin', password=hashed_password, email='admin@example.com', role='admin')
         db.session.add(admin_user)
         db.session.commit()
