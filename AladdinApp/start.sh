@@ -6,7 +6,7 @@ echo "=================================="
 
 # Install/upgrade dependencies without virtual environment (Replit handles this)
 echo "📋 Installing dependencies..."
-pip install -r requirements.txt
+pip install --upgrade --force-reinstall -r requirements.txt
 
 # Create instance directory with proper permissions
 echo "📁 Setting up database directory..."
