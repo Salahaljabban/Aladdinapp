@@ -1,0 +1,50 @@
+      Successfully uninstalled Flask-3.1.1
+Successfully installed Flask-2.3.3 Flask-Login-0.6.3 Flask-SQLAlchemy-3.1.1 Jinja2-3.1.2 MarkupSafe-2.1.3 SQLAlchemy-2.0.23 Werkzeug-2.3.7 blinker-1.7.0 click-8.1.7 itsdangerous-2.1.2
+🚀 Launching Aladdin GRC...
+Traceback (most recent call last):
+  File "C:\Users\s.jabban\OneDrive - American Center for Psychiatry and Neurology\Documents\GitHub\Aladdin\Aladdinapp\AladdinApp\main.py", line 8, in <module>
+    from app import create_app
+  File "C:\Users\s.jabban\OneDrive - American Center for Psychiatry and Neurology\Documents\GitHub\Aladdin\Aladdinapp\AladdinApp\app.py", line 2, in <module>
+    from flask_sqlalchemy import SQLAlchemy
+  File "C:\Program Files\Python313\Lib\site-packages\flask_sqlalchemy\__init__.py", line 5, in <module>
+    from .extension import SQLAlchemy
+  File "C:\Program Files\Python313\Lib\site-packages\flask_sqlalchemy\extension.py", line 9, in <module>
+    import sqlalchemy as sa
+  File "C:\Program Files\Python313\Lib\site-packages\sqlalchemy\__init__.py", line 13, in <module>
+    from .engine import AdaptedConnection as AdaptedConnection
+  File "C:\Program Files\Python313\Lib\site-packages\sqlalchemy\engine\__init__.py", line 18, in <module>
+    from . import events as events
+  File "C:\Program Files\Python313\Lib\site-packages\sqlalchemy\engine\events.py", line 19, in <module>
+    from .base import Connection
+  File "C:\Program Files\Python313\Lib\site-packages\sqlalchemy\engine\base.py", line 30, in <module>
+    from .interfaces import BindTyping
+  File "C:\Program Files\Python313\Lib\site-packages\sqlalchemy\engine\interfaces.py", line 38, in <module>
+    from ..sql.compiler import Compiled as Compiled
+  File "C:\Program Files\Python313\Lib\site-packages\sqlalchemy\sql\__init__.py", line 14, in <module>
+    from .compiler import COLLECT_CARTESIAN_PRODUCTS as COLLECT_CARTESIAN_PRODUCTS
+  File "C:\Program Files\Python313\Lib\site-packages\sqlalchemy\sql\compiler.py", line 61, in <module>
+    from . import crud
+  File "C:\Program Files\Python313\Lib\site-packages\sqlalchemy\sql\crud.py", line 34, in <module>
+    from . import dml
+  File "C:\Program Files\Python313\Lib\site-packages\sqlalchemy\sql\dml.py", line 34, in <module>
+    from . import util as sql_util
+  File "C:\Program Files\Python313\Lib\site-packages\sqlalchemy\sql\util.py", line 46, in <module>
+    from .ddl import sort_tables as sort_tables  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\site-packages\sqlalchemy\sql\ddl.py", line 30, in <module>
+    from .elements import ClauseElement
+  File "C:\Program Files\Python313\Lib\site-packages\sqlalchemy\sql\elements.py", line 808, in <module>
+    class SQLCoreOperations(Generic[_T_co], ColumnOperators, TypingOnly):
+    ...<472 lines>...
+                ...
+  File "C:\Program Files\Python313\Lib\typing.py", line 1257, in _generic_init_subclass
+    super(Generic, cls).__init_subclass__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 1988, in __init_subclass__
+    raise AssertionError(
+    ...<2 lines>...
+    )
+AssertionError: Class <class 'sqlalchemy.sql.elements.SQLCoreOperations'> directly inherits TypingOnly but has additional attributes {'__static_attributes__', '__firstlineno__'}.
+
+s.aljabban.admin@AZLT330 MINGW64 /c/Users/s.jabban/OneDrive - American Center for Psychiatry and Neurology/Documents/GitHub/Aladdin/Aladdinapp/AladdinApp
+$
