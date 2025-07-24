@@ -11,3 +11,7 @@ mode = "sequential"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "cd AladdinApp && bash start.sh"
+
+[[ports]]
+localPort = 5000
+externalPort = 80
