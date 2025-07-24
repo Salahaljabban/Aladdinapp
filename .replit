@@ -1,0 +1,11 @@
+[workflows]
+runButton = "Run AladdinApp"
+
+[[workflows.workflow]]
+name = "Run AladdinApp"
+author = 44240447
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd AladdinApp && python main.py"
