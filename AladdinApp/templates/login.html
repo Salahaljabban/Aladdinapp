@@ -2,7 +2,7 @@
 
 {% block title %}Login - Aladdin GRC{% endblock %}
 
-{% block content %}
+{% block guest_content %}
 <!-- Flash Messages -->
 {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -51,4 +51,4 @@
         Default admin credentials: admin / admin
     </small>
 </div>
-{% endblock %}
+{% endblock guest_content %}

@@ -3,7 +3,7 @@
 
 {% block title %}Register - Aladdin GRC{% endblock %}
 
-{% block content %}
+{% block guest_content %}
 <!-- Flash Messages -->
 {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -54,4 +54,4 @@
         <i class="fas fa-sign-in-alt"></i> Login Here
     </a>
 </div>
-{% endblock %}
+{% endblock guest_content %}

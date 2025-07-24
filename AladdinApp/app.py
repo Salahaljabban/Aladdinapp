@@ -92,6 +92,16 @@ class Incident(db.Model):
     def __repr__(self):
         return f"Incident('{self.title}', '{self.reported_by}', '{self.status}')"
 
+# Define ComplianceFramework model
+class ComplianceFramework(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255), nullable=False)
+    version = db.Column(db.String(50))
+    description = db.Column(db.Text)
+    regulatory_body = db.Column(db.String(100))
+    is_mandatory = db.Column(db.Boolean, default=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
 # Flask route for homepage
 @app.route('/')
 def index():
@@ -354,14 +364,20 @@ def new_incident():
     if request.method == 'POST':
         title = request.form.get('title')
         description = request.form.get('description')
-        date_occurred = request.form.get('date_occurred')
+        date_occurred_str = request.form.get('date_occurred')
+        date_occurred = datetime.fromisoformat(date_occurred_str) if date_occurred_str else None
         reported_by = request.form.get('reported_by')
         impact = request.form.get('impact')
         corrective_action = request.form.get('corrective_action')
 
-        new_incident = Incident(title=title, description=description,
-                                date_occurred=date_occurred, reported_by=reported_by,
-                                impact=impact, corrective_action=corrective_action)
+        new_incident = Incident(
+            title=title,
+            description=description,
+            date_occurred=date_occurred,
+            reported_by=reported_by,
+            impact=impact,
+            corrective_action=corrective_action,
+        )
 
         db.session.add(new_incident)
         db.session.commit()
@@ -380,7 +396,8 @@ def edit_incident(id):
     if request.method == 'POST':
         incident.title = request.form.get('title')
         incident.description = request.form.get('description')
-        incident.date_occurred = request.form.get('date_occurred')
+        date_occurred_str = request.form.get('date_occurred')
+        incident.date_occurred = datetime.fromisoformat(date_occurred_str) if date_occurred_str else None
         incident.reported_by = request.form.get('reported_by')
         incident.status = request.form.get('status')
         incident.impact = request.form.get('impact')
@@ -408,7 +425,8 @@ def delete_incident(id):
 @app.route('/compliance')
 @login_required
 def compliance():
-    return render_template('compliance/index.html')
+    frameworks = ComplianceFramework.query.all()
+    return render_template('compliance/index.html', frameworks=frameworks)
 
 # Flask route for policies page
 @app.route('/policies')

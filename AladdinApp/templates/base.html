@@ -189,7 +189,7 @@
                         </div>
                         {% block auth_content %}
                         {% if not current_user.is_authenticated %}
-                            {% block content %}{% endblock %}
+                            {% block guest_content %}{% endblock %}
                         {% endif %}
                         {% endblock %}
                     </div>

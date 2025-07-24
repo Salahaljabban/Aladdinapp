@@ -1,1 +1,2 @@
-pip install -r reqs.txt
+#!/bin/bash
+pip install -r requirements.txt
