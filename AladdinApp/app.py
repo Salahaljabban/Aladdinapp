@@ -416,13 +416,6 @@ def compliance():
 def policies():
     return render_template('policies/index.html')
 
-# Flask route for controls page (update existing if needed)
-@app.route('/controls')
-@login_required
-def controls():
-    controls = Control.query.all()
-    return render_template('controls.html', controls=controls)
-
 def init_database():
     db.create_all()
 
