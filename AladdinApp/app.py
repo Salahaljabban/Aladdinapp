@@ -153,7 +153,7 @@ def login():
 @login_required
 def dashboard():
     # Pass the user's role to the template
-    return render_template('dashboard.html', role=current_user.role)
+    return render_template('dash.html', role=current_user.role)
 
 # Flask route for logout
 @app.route('/logout')
