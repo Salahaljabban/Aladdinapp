@@ -187,7 +187,11 @@
                             </h2>
                             <p class="text-muted">Governance, Risk & Compliance System</p>
                         </div>
-                        {% block content %}{% endblock %}
+                        {% block auth_content %}
+                        {% if not current_user.is_authenticated %}
+                            {% block content %}{% endblock %}
+                        {% endif %}
+                        {% endblock %}
                     </div>
                 </div>
             </div>
