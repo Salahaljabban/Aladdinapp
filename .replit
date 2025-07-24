@@ -8,4 +8,4 @@ mode = "sequential"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd AladdinApp && python3 main.py"
+args = "cd AladdinApp && python main.py"
