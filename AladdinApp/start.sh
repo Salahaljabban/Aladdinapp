@@ -8,14 +8,14 @@ echo "=================================="
 echo "📋 Installing dependencies..."
 pip install --upgrade --force-reinstall -r requirements.txt
 
-# Create instance directory with proper permissions
+# Create database directory with proper permissions
 echo "📁 Setting up database directory..."
-mkdir -p instance
-chmod 755 instance
+mkdir -p /tmp
+chmod 755 /tmp
 
 # Remove existing database to ensure clean start
-if [ -f "instance/aladdin_grc.db" ]; then
-    rm instance/aladdin_grc.db
+if [ -f "/tmp/aladdin_grc.db" ]; then
+    rm /tmp/aladdin_grc.db
 fi
 
 # Set environment variables
