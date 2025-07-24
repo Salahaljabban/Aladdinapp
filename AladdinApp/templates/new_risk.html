@@ -1,0 +1,92 @@
+
+{% extends "base.html" %}
+
+{% block title %}Add New Risk - Aladdin GRC{% endblock %}
+
+{% block header %}Add New Risk{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Risk Details</h6>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('new_risk') }}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Risk Title *</label>
+                                <input type="text" class="form-control" id="title" name="title" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="category" class="form-label">Category</label>
+                                <select class="form-select" id="category" name="category">
+                                    <option value="">Select Category</option>
+                                    <option value="Operational">Operational</option>
+                                    <option value="Financial">Financial</option>
+                                    <option value="Strategic">Strategic</option>
+                                    <option value="Compliance">Compliance</option>
+                                    <option value="Technology">Technology</option>
+                                    <option value="Reputational">Reputational</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description *</label>
+                        <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="likelihood" class="form-label">Likelihood</label>
+                                <select class="form-select" id="likelihood" name="likelihood">
+                                    <option value="Low">Low (1-2)</option>
+                                    <option value="Medium">Medium (3)</option>
+                                    <option value="High">High (4-5)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="impact" class="form-label">Impact</label>
+                                <select class="form-select" id="impact" name="impact">
+                                    <option value="Low">Low (1-2)</option>
+                                    <option value="Medium">Medium (3)</option>
+                                    <option value="High">High (4-5)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="risk_owner" class="form-label">Risk Owner</label>
+                                <input type="text" class="form-control" id="risk_owner" name="risk_owner">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="mitigation_plan" class="form-label">Mitigation Plan</label>
+                        <textarea class="form-control" id="mitigation_plan" name="mitigation_plan" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ url_for('risks') }}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Back to Risks
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Risk
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

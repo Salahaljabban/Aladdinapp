@@ -1,0 +1,81 @@
+
+{% extends "base.html" %}
+
+{% block title %}Edit Incident - Aladdin GRC{% endblock %}
+
+{% block header %}Edit Incident{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Edit Incident Details</h6>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('edit_incident', id=incident.id) }}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Incident Title *</label>
+                                <input type="text" class="form-control" id="title" name="title" value="{{ incident.title }}" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label for="date_occurred" class="form-label">Date Occurred</label>
+                                <input type="datetime-local" class="form-control" id="date_occurred" name="date_occurred" 
+                                       value="{{ incident.date_occurred.strftime('%Y-%m-%dT%H:%M') if incident.date_occurred else '' }}">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label for="status" class="form-label">Status</label>
+                                <select class="form-select" id="status" name="status">
+                                    <option value="Open" {{ 'selected' if incident.status == 'Open' }}>Open</option>
+                                    <option value="In Progress" {{ 'selected' if incident.status == 'In Progress' }}>In Progress</option>
+                                    <option value="Closed" {{ 'selected' if incident.status == 'Closed' }}>Closed</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description *</label>
+                        <textarea class="form-control" id="description" name="description" rows="4" required>{{ incident.description }}</textarea>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="reported_by" class="form-label">Reported By</label>
+                                <input type="text" class="form-control" id="reported_by" name="reported_by" value="{{ incident.reported_by or '' }}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="impact" class="form-label">Impact</label>
+                                <input type="text" class="form-control" id="impact" name="impact" value="{{ incident.impact or '' }}">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="corrective_action" class="form-label">Corrective Actions</label>
+                        <textarea class="form-control" id="corrective_action" name="corrective_action" rows="3">{{ incident.corrective_action or '' }}</textarea>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ url_for('incidents') }}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Back to Incidents
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Update Incident
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

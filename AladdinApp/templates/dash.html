@@ -3,78 +3,85 @@
 
 {% block title %}Dashboard - Aladdin GRC{% endblock %}
 
+{% block header %}Dashboard{% endblock %}
+
 {% block content %}
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">
-        <i class="fas fa-tachometer-alt"></i> Dashboard
-    </h1>
-    <div class="btn-toolbar mb-2 mb-md-0">
-        <div class="btn-group me-2">
-            <span class="badge bg-primary">{{ role|title }} User</span>
-        </div>
-    </div>
-</div>
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
 
-<!-- Quick Stats -->
+<!-- KPI Cards -->
 <div class="row mb-4">
-    <div class="col-md-3">
-        <div class="card bg-primary text-white">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
             <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h6 class="card-title">Total Risks</h6>
-                        <h3>24</h3>
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Total Risks</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_risks or 0 }}</div>
                     </div>
-                    <div class="align-self-center">
-                        <i class="fas fa-exclamation-triangle fa-2x"></i>
+                    <div class="col-auto">
+                        <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
-    <div class="col-md-3">
-        <div class="card bg-success text-white">
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
             <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h6 class="card-title">Active Controls</h6>
-                        <h3>18</h3>
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            Active Controls</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ active_controls or 0 }}</div>
                     </div>
-                    <div class="align-self-center">
-                        <i class="fas fa-shield-alt fa-2x"></i>
+                    <div class="col-auto">
+                        <i class="fas fa-shield-alt fa-2x text-gray-300"></i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
-    <div class="col-md-3">
-        <div class="card bg-warning text-white">
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2">
             <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h6 class="card-title">Open Incidents</h6>
-                        <h3>7</h3>
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                            Open Incidents</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ open_incidents or 0 }}</div>
                     </div>
-                    <div class="align-self-center">
-                        <i class="fas fa-bug fa-2x"></i>
+                    <div class="col-auto">
+                        <i class="fas fa-bug fa-2x text-gray-300"></i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
-    <div class="col-md-3">
-        <div class="card bg-info text-white">
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
             <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h6 class="card-title">Compliance Score</h6>
-                        <h3>92%</h3>
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                            Compliance Score</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ compliance_score or "85%" }}</div>
                     </div>
-                    <div class="align-self-center">
-                        <i class="fas fa-chart-line fa-2x"></i>
+                    <div class="col-auto">
+                        <i class="fas fa-check-circle fa-2x text-gray-300"></i>
                     </div>
                 </div>
             </div>
@@ -82,118 +89,183 @@
     </div>
 </div>
 
-<!-- Quick Actions -->
-<div class="row mb-4">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">Quick Actions</h5>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-3 mb-2">
-                        <a href="{{ url_for('new_risk') }}" class="btn btn-outline-primary w-100">
-                            <i class="fas fa-plus"></i> Add Risk
-                        </a>
-                    </div>
-                    <div class="col-md-3 mb-2">
-                        <a href="{{ url_for('new_control') }}" class="btn btn-outline-success w-100">
-                            <i class="fas fa-plus"></i> Add Control
-                        </a>
-                    </div>
-                    <div class="col-md-3 mb-2">
-                        <a href="{{ url_for('new_incident') }}" class="btn btn-outline-warning w-100">
-                            <i class="fas fa-plus"></i> Report Incident
-                        </a>
-                    </div>
-                    <div class="col-md-3 mb-2">
-                        <a href="{{ url_for('profile') }}" class="btn btn-outline-info w-100">
-                            <i class="fas fa-user"></i> Update Profile
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Recent Activity -->
+<!-- Charts Row -->
 <div class="row">
-    <div class="col-lg-8">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">Recent Activity</h5>
+    <div class="col-xl-8 col-lg-7">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Risk Trend Analysis</h6>
             </div>
             <div class="card-body">
-                <div class="list-group list-group-flush">
-                    <div class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="mb-1">New risk identified: Data Breach</h6>
-                            <p class="mb-1 text-muted">High impact security risk added to system</p>
-                            <small class="text-muted">2 hours ago</small>
-                        </div>
-                        <span class="badge bg-danger rounded-pill">High</span>
-                    </div>
-                    
-                    <div class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="mb-1">Control updated: Access Management</h6>
-                            <p class="mb-1 text-muted">Control testing completed successfully</p>
-                            <small class="text-muted">5 hours ago</small>
-                        </div>
-                        <span class="badge bg-success rounded-pill">Completed</span>
-                    </div>
-                    
-                    <div class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="mb-1">Incident resolved: System Outage</h6>
-                            <p class="mb-1 text-muted">Network connectivity issue resolved</p>
-                            <small class="text-muted">1 day ago</small>
-                        </div>
-                        <span class="badge bg-primary rounded-pill">Resolved</span>
-                    </div>
+                <div class="chart-area">
+                    <canvas id="riskTrendChart"></canvas>
                 </div>
             </div>
         </div>
     </div>
-    
-    <div class="col-lg-4">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">Risk Distribution</h5>
+
+    <div class="col-xl-4 col-lg-5">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Risk Distribution</h6>
             </div>
             <div class="card-body">
-                <div class="mb-3">
-                    <div class="d-flex justify-content-between">
-                        <span>High Risk</span>
-                        <span>5</span>
-                    </div>
-                    <div class="progress" style="height: 8px;">
-                        <div class="progress-bar bg-danger" style="width: 25%"></div>
-                    </div>
-                </div>
-                
-                <div class="mb-3">
-                    <div class="d-flex justify-content-between">
-                        <span>Medium Risk</span>
-                        <span>12</span>
-                    </div>
-                    <div class="progress" style="height: 8px;">
-                        <div class="progress-bar bg-warning" style="width: 60%"></div>
-                    </div>
-                </div>
-                
-                <div class="mb-3">
-                    <div class="d-flex justify-content-between">
-                        <span>Low Risk</span>
-                        <span>7</span>
-                    </div>
-                    <div class="progress" style="height: 8px;">
-                        <div class="progress-bar bg-success" style="width: 35%"></div>
-                    </div>
+                <div class="chart-pie pt-4 pb-2">
+                    <canvas id="riskDistributionChart"></canvas>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Recent Activities -->
+<div class="row">
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Recent Risks</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-borderless" id="recentRisks">
+                        <thead>
+                            <tr>
+                                <th>Risk Title</th>
+                                <th>Level</th>
+                                <th>Owner</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if recent_risks %}
+                                {% for risk in recent_risks %}
+                                <tr>
+                                    <td>{{ risk.title }}</td>
+                                    <td>
+                                        <span class="badge badge-{{ 'danger' if risk.impact == 'High' else 'warning' if risk.impact == 'Medium' else 'success' }}">
+                                            {{ risk.impact }}
+                                        </span>
+                                    </td>
+                                    <td>{{ risk.risk_owner }}</td>
+                                </tr>
+                                {% endfor %}
+                            {% else %}
+                            <tr>
+                                <td colspan="3" class="text-center text-muted">No recent risks found</td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Recent Incidents</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-borderless" id="recentIncidents">
+                        <thead>
+                            <tr>
+                                <th>Incident Title</th>
+                                <th>Status</th>
+                                <th>Reporter</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if recent_incidents %}
+                                {% for incident in recent_incidents %}
+                                <tr>
+                                    <td>{{ incident.title }}</td>
+                                    <td>
+                                        <span class="badge badge-{{ 'success' if incident.status == 'Closed' else 'warning' if incident.status == 'In Progress' else 'danger' }}">
+                                            {{ incident.status }}
+                                        </span>
+                                    </td>
+                                    <td>{{ incident.reported_by }}</td>
+                                </tr>
+                                {% endfor %}
+                            {% else %}
+                            <tr>
+                                <td colspan="3" class="text-center text-muted">No recent incidents found</td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Risk Trend Chart
+const riskTrendCtx = document.getElementById('riskTrendChart').getContext('2d');
+const riskTrendChart = new Chart(riskTrendCtx, {
+    type: 'line',
+    data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [{
+            label: 'High Risk',
+            data: [12, 19, 3, 5, 2, 3],
+            borderColor: 'rgb(220, 53, 69)',
+            backgroundColor: 'rgba(220, 53, 69, 0.1)',
+            tension: 0.1
+        }, {
+            label: 'Medium Risk',
+            data: [2, 3, 20, 5, 1, 4],
+            borderColor: 'rgb(255, 193, 7)',
+            backgroundColor: 'rgba(255, 193, 7, 0.1)',
+            tension: 0.1
+        }, {
+            label: 'Low Risk',
+            data: [3, 10, 13, 15, 22, 30],
+            borderColor: 'rgb(25, 135, 84)',
+            backgroundColor: 'rgba(25, 135, 84, 0.1)',
+            tension: 0.1
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+// Risk Distribution Chart
+const riskDistCtx = document.getElementById('riskDistributionChart').getContext('2d');
+const riskDistributionChart = new Chart(riskDistCtx, {
+    type: 'doughnut',
+    data: {
+        labels: ['High', 'Medium', 'Low'],
+        datasets: [{
+            data: [{{ high_risks or 5 }}, {{ medium_risks or 15 }}, {{ low_risks or 25 }}],
+            backgroundColor: [
+                'rgb(220, 53, 69)',
+                'rgb(255, 193, 7)',
+                'rgb(25, 135, 84)'
+            ],
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'bottom'
+            }
+        }
+    }
+});
+</script>
 {% endblock %}

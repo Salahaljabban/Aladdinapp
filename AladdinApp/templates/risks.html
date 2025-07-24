@@ -1,0 +1,109 @@
+
+{% extends "base.html" %}
+
+{% block title %}Risk Management - Aladdin GRC{% endblock %}
+
+{% block header %}Risk Management{% endblock %}
+
+{% block content %}
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4>Risk Register</h4>
+    <a href="{{ url_for('new_risk') }}" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Add New Risk
+    </a>
+</div>
+
+<div class="card shadow">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="risksTable">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Likelihood</th>
+                        <th>Impact</th>
+                        <th>Owner</th>
+                        <th>Status</th>
+                        <th>Date Identified</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if risks %}
+                        {% for risk in risks %}
+                        <tr>
+                            <td>{{ risk.id }}</td>
+                            <td>{{ risk.title }}</td>
+                            <td>{{ risk.category or 'N/A' }}</td>
+                            <td>
+                                <span class="badge bg-{{ 'danger' if risk.likelihood == 'High' else 'warning' if risk.likelihood == 'Medium' else 'success' }}">
+                                    {{ risk.likelihood or 'Low' }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge bg-{{ 'danger' if risk.impact == 'High' else 'warning' if risk.impact == 'Medium' else 'success' }}">
+                                    {{ risk.impact or 'Low' }}
+                                </span>
+                            </td>
+                            <td>{{ risk.risk_owner or 'Unassigned' }}</td>
+                            <td>
+                                <span class="badge bg-{{ 'success' if risk.status == 'Closed' else 'warning' if risk.status == 'In Progress' else 'danger' }}">
+                                    {{ risk.status }}
+                                </span>
+                            </td>
+                            <td>{{ risk.date_identified.strftime('%Y-%m-%d') if risk.date_identified else 'N/A' }}</td>
+                            <td>
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a href="{{ url_for('edit_risk', id=risk.id) }}" class="btn btn-outline-primary btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form method="POST" action="{{ url_for('delete_risk', id=risk.id) }}" style="display: inline;" 
+                                          onsubmit="return confirm('Are you sure you want to delete this risk?')">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="9" class="text-center text-muted">No risks found. <a href="{{ url_for('new_risk') }}">Add your first risk</a></td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Initialize DataTable for better table functionality
+$(document).ready(function() {
+    $('#risksTable').DataTable({
+        "pageLength": 25,
+        "order": [[ 7, "desc" ]],
+        "columnDefs": [
+            { "orderable": false, "targets": 8 }
+        ]
+    });
+});
+</script>
+{% endblock %}

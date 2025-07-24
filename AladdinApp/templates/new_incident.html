@@ -1,0 +1,76 @@
+
+{% extends "base.html" %}
+
+{% block title %}Report New Incident - Aladdin GRC{% endblock %}
+
+{% block header %}Report New Incident{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Incident Details</h6>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('new_incident') }}">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Incident Title *</label>
+                                <input type="text" class="form-control" id="title" name="title" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="date_occurred" class="form-label">Date Occurred</label>
+                                <input type="datetime-local" class="form-control" id="date_occurred" name="date_occurred">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description *</label>
+                        <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="reported_by" class="form-label">Reported By</label>
+                                <input type="text" class="form-control" id="reported_by" name="reported_by" value="{{ current_user.username }}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="impact" class="form-label">Impact</label>
+                                <select class="form-select" id="impact" name="impact">
+                                    <option value="">Select Impact Level</option>
+                                    <option value="Low">Low</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="High">High</option>
+                                    <option value="Critical">Critical</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="corrective_action" class="form-label">Immediate Actions Taken</label>
+                        <textarea class="form-control" id="corrective_action" name="corrective_action" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ url_for('incidents') }}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Back to Incidents
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Report Incident
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

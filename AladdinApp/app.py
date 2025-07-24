@@ -156,8 +156,30 @@ def login():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    # Pass the user's role to the template
-    return render_template('dash.html', role=current_user.role)
+    # Get dashboard statistics
+    total_risks = Risk.query.count()
+    active_controls = Control.query.filter_by(status='Active').count()
+    open_incidents = Incident.query.filter_by(status='Open').count()
+    
+    # Get recent data
+    recent_risks = Risk.query.order_by(Risk.date_identified.desc()).limit(5).all()
+    recent_incidents = Incident.query.order_by(Incident.date_occurred.desc()).limit(5).all()
+    
+    # Calculate risk distribution
+    high_risks = Risk.query.filter_by(impact='High').count()
+    medium_risks = Risk.query.filter_by(impact='Medium').count()
+    low_risks = Risk.query.filter_by(impact='Low').count()
+    
+    return render_template('dash.html', 
+                         role=current_user.role,
+                         total_risks=total_risks,
+                         active_controls=active_controls,
+                         open_incidents=open_incidents,
+                         recent_risks=recent_risks,
+                         recent_incidents=recent_incidents,
+                         high_risks=high_risks,
+                         medium_risks=medium_risks,
+                         low_risks=low_risks)
 
 # Flask route for logout
 @app.route('/logout')
@@ -381,6 +403,25 @@ def delete_incident(id):
 
     flash('Incident deleted successfully!', 'success')
     return redirect(url_for('incidents'))
+
+# Flask route for compliance page
+@app.route('/compliance')
+@login_required
+def compliance():
+    return render_template('compliance/index.html')
+
+# Flask route for policies page
+@app.route('/policies')
+@login_required
+def policies():
+    return render_template('policies/index.html')
+
+# Flask route for controls page (update existing if needed)
+@app.route('/controls')
+@login_required
+def controls():
+    controls = Control.query.all()
+    return render_template('controls.html', controls=controls)
 
 def init_database():
     db.create_all()

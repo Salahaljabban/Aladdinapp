@@ -1,0 +1,89 @@
+
+{% extends "base.html" %}
+
+{% block title %}Edit Control - Aladdin GRC{% endblock %}
+
+{% block header %}Edit Control{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Edit Control Details</h6>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('edit_control', id=control.id) }}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Control Name *</label>
+                                <input type="text" class="form-control" id="name" name="name" value="{{ control.name }}" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="type" class="form-label">Control Type</label>
+                                <select class="form-select" id="type" name="type">
+                                    <option value="">Select Type</option>
+                                    <option value="Preventive" {{ 'selected' if control.type == 'Preventive' }}>Preventive</option>
+                                    <option value="Detective" {{ 'selected' if control.type == 'Detective' }}>Detective</option>
+                                    <option value="Corrective" {{ 'selected' if control.type == 'Corrective' }}>Corrective</option>
+                                    <option value="Compensating" {{ 'selected' if control.type == 'Compensating' }}>Compensating</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description *</label>
+                        <textarea class="form-control" id="description" name="description" rows="4" required>{{ control.description }}</textarea>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="frequency" class="form-label">Frequency</label>
+                                <select class="form-select" id="frequency" name="frequency">
+                                    <option value="">Select Frequency</option>
+                                    <option value="Daily" {{ 'selected' if control.frequency == 'Daily' }}>Daily</option>
+                                    <option value="Weekly" {{ 'selected' if control.frequency == 'Weekly' }}>Weekly</option>
+                                    <option value="Monthly" {{ 'selected' if control.frequency == 'Monthly' }}>Monthly</option>
+                                    <option value="Quarterly" {{ 'selected' if control.frequency == 'Quarterly' }}>Quarterly</option>
+                                    <option value="Annually" {{ 'selected' if control.frequency == 'Annually' }}>Annually</option>
+                                    <option value="Ad-hoc" {{ 'selected' if control.frequency == 'Ad-hoc' }}>Ad-hoc</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="owner" class="form-label">Control Owner</label>
+                                <input type="text" class="form-control" id="owner" name="owner" value="{{ control.owner or '' }}">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="status" class="form-label">Status</label>
+                                <select class="form-select" id="status" name="status">
+                                    <option value="Active" {{ 'selected' if control.status == 'Active' }}>Active</option>
+                                    <option value="Inactive" {{ 'selected' if control.status == 'Inactive' }}>Inactive</option>
+                                    <option value="Under Review" {{ 'selected' if control.status == 'Under Review' }}>Under Review</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ url_for('controls') }}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Back to Controls
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Update Control
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
