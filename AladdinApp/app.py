@@ -17,6 +17,10 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 login_manager.login_view = 'login'  # Specify the login view
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
 
 # Define User model
 class User(UserMixin, db.Model):

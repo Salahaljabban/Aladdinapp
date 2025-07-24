@@ -1,0 +1,199 @@
+
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Aladdin GRC{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">
+        <i class="fas fa-tachometer-alt"></i> Dashboard
+    </h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group me-2">
+            <span class="badge bg-primary">{{ role|title }} User</span>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Stats -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Total Risks</h6>
+                        <h3>24</h3>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-exclamation-triangle fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Active Controls</h6>
+                        <h3>18</h3>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-shield-alt fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Open Incidents</h6>
+                        <h3>7</h3>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-bug fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Compliance Score</h6>
+                        <h3>92%</h3>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-chart-line fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 mb-2">
+                        <a href="{{ url_for('new_risk') }}" class="btn btn-outline-primary w-100">
+                            <i class="fas fa-plus"></i> Add Risk
+                        </a>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <a href="{{ url_for('new_control') }}" class="btn btn-outline-success w-100">
+                            <i class="fas fa-plus"></i> Add Control
+                        </a>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <a href="{{ url_for('new_incident') }}" class="btn btn-outline-warning w-100">
+                            <i class="fas fa-plus"></i> Report Incident
+                        </a>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <a href="{{ url_for('profile') }}" class="btn btn-outline-info w-100">
+                            <i class="fas fa-user"></i> Update Profile
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Activity -->
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Recent Activity</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1">New risk identified: Data Breach</h6>
+                            <p class="mb-1 text-muted">High impact security risk added to system</p>
+                            <small class="text-muted">2 hours ago</small>
+                        </div>
+                        <span class="badge bg-danger rounded-pill">High</span>
+                    </div>
+                    
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1">Control updated: Access Management</h6>
+                            <p class="mb-1 text-muted">Control testing completed successfully</p>
+                            <small class="text-muted">5 hours ago</small>
+                        </div>
+                        <span class="badge bg-success rounded-pill">Completed</span>
+                    </div>
+                    
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1">Incident resolved: System Outage</h6>
+                            <p class="mb-1 text-muted">Network connectivity issue resolved</p>
+                            <small class="text-muted">1 day ago</small>
+                        </div>
+                        <span class="badge bg-primary rounded-pill">Resolved</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Risk Distribution</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between">
+                        <span>High Risk</span>
+                        <span>5</span>
+                    </div>
+                    <div class="progress" style="height: 8px;">
+                        <div class="progress-bar bg-danger" style="width: 25%"></div>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between">
+                        <span>Medium Risk</span>
+                        <span>12</span>
+                    </div>
+                    <div class="progress" style="height: 8px;">
+                        <div class="progress-bar bg-warning" style="width: 60%"></div>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between">
+                        <span>Low Risk</span>
+                        <span>7</span>
+                    </div>
+                    <div class="progress" style="height: 8px;">
+                        <div class="progress-bar bg-success" style="width: 35%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
