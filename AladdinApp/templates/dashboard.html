@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Aladdin GRC{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Total Risks</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.total_risks }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-danger shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                            High Risks</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.high_risks }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-fire fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                            Policies</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.policies }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-file-alt fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                            Open Incidents</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.incidents }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-bug fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Recent Risks</h6>
+            </div>
+            <div class="card-body">
+                {% if recent_risks %}
+                <div class="table-responsive">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Risk Level</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for risk in recent_risks %}
+                            <tr>
+                                <td>{{ risk.title }}</td>
+                                <td>
+                                    <span class="badge 
+                                        {% if risk.risk_level == 'Critical' %}bg-danger
+                                        {% elif risk.risk_level == 'High' %}bg-warning
+                                        {% elif risk.risk_level == 'Medium' %}bg-info
+                                        {% else %}bg-success{% endif %}">
+                                        {{ risk.risk_level }}
+                                    </span>
+                                </td>
+                                <td>{{ risk.status }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p>No risks found.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Recent Incidents</h6>
+            </div>
+            <div class="card-body">
+                {% if recent_incidents %}
+                <div class="table-responsive">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Severity</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for incident in recent_incidents %}
+                            <tr>
+                                <td>{{ incident.title }}</td>
+                                <td>
+                                    <span class="badge 
+                                        {% if incident.severity == 'Critical' %}bg-danger
+                                        {% elif incident.severity == 'High' %}bg-warning
+                                        {% elif incident.severity == 'Medium' %}bg-info
+                                        {% else %}bg-success{% endif %}">
+                                        {{ incident.severity }}
+                                    </span>
+                                </td>
+                                <td>{{ incident.status }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p>No incidents found.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

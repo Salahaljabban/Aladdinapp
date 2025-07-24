@@ -1,0 +1,94 @@
+
+{% extends "base.html" %}
+
+{% block title %}Compliance Management - Aladdin GRC{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Compliance Management</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group me-2">
+            <button class="btn btn-primary">
+                <i class="fas fa-plus"></i> Add Framework
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    {% for framework in frameworks %}
+    <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h6 class="mb-0">{{ framework.name }}</h6>
+                {% if framework.is_mandatory %}
+                <span class="badge bg-danger">Mandatory</span>
+                {% else %}
+                <span class="badge bg-secondary">Optional</span>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{ framework.description }}</p>
+                <small class="text-muted">
+                    <strong>Version:</strong> {{ framework.version }}<br>
+                    <strong>Authority:</strong> {{ framework.regulatory_body }}
+                </small>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-muted">85% Compliant</small>
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-primary">View</button>
+                        <button class="btn btn-outline-secondary">Controls</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Compliance Status Overview</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="complianceChart" width="400" height="100"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const complianceCtx = document.getElementById('complianceChart').getContext('2d');
+new Chart(complianceCtx, {
+    type: 'bar',
+    data: {
+        labels: ['ADHICS v2', 'ISO 27001', 'UAE PDPL', 'NIST CSF'],
+        datasets: [{
+            label: 'Compliance %',
+            data: [85, 78, 92, 75],
+            backgroundColor: [
+                'rgba(40, 167, 69, 0.8)',
+                'rgba(255, 193, 7, 0.8)', 
+                'rgba(40, 167, 69, 0.8)',
+                'rgba(255, 126, 20, 0.8)'
+            ]
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                max: 100
+            }
+        }
+    }
+});
+</script>
+{% endblock %}

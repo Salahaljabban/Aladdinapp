@@ -1,0 +1,119 @@
+
+{% extends "base.html" %}
+
+{% block title %}Create Risk - Aladdin GRC{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Create New Risk</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group me-2">
+            <a href="{{ url_for('risks') }}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Risks
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Risk Title *</label>
+                        <input type="text" class="form-control" id="title" name="title" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="category" class="form-label">Category *</label>
+                                <select class="form-select" id="category" name="category" required>
+                                    <option value="">Select Category</option>
+                                    <option value="IT">IT Security</option>
+                                    <option value="Clinical">Clinical</option>
+                                    <option value="Operational">Operational</option>
+                                    <option value="Strategic">Strategic</option>
+                                    <option value="Financial">Financial</option>
+                                    <option value="Regulatory">Regulatory</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label for="likelihood" class="form-label">Likelihood *</label>
+                                <select class="form-select" id="likelihood" name="likelihood" required>
+                                    <option value="">Select</option>
+                                    <option value="1">1 - Very Low</option>
+                                    <option value="2">2 - Low</option>
+                                    <option value="3">3 - Medium</option>
+                                    <option value="4">4 - High</option>
+                                    <option value="5">5 - Very High</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label for="impact" class="form-label">Impact *</label>
+                                <select class="form-select" id="impact" name="impact" required>
+                                    <option value="">Select</option>
+                                    <option value="1">1 - Very Low</option>
+                                    <option value="2">2 - Low</option>
+                                    <option value="3">3 - Medium</option>
+                                    <option value="4">4 - High</option>
+                                    <option value="5">5 - Very High</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="treatment_plan" class="form-label">Treatment Plan</label>
+                        <textarea class="form-control" id="treatment_plan" name="treatment_plan" rows="3" placeholder="Describe the risk treatment/mitigation plan..."></textarea>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{{ url_for('risks') }}" class="btn btn-secondary me-md-2">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Create Risk</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h6>Risk Assessment Guide</h6>
+            </div>
+            <div class="card-body">
+                <h6>Likelihood Scale:</h6>
+                <ul class="list-unstyled small">
+                    <li><strong>1 - Very Low:</strong> Once in 10+ years</li>
+                    <li><strong>2 - Low:</strong> Once in 5-10 years</li>
+                    <li><strong>3 - Medium:</strong> Once in 1-5 years</li>
+                    <li><strong>4 - High:</strong> Once per year</li>
+                    <li><strong>5 - Very High:</strong> Multiple times per year</li>
+                </ul>
+                
+                <h6 class="mt-3">Impact Scale:</h6>
+                <ul class="list-unstyled small">
+                    <li><strong>1 - Very Low:</strong> Minimal impact</li>
+                    <li><strong>2 - Low:</strong> Minor disruption</li>
+                    <li><strong>3 - Medium:</strong> Moderate impact</li>
+                    <li><strong>4 - High:</strong> Significant impact</li>
+                    <li><strong>5 - Very High:</strong> Severe/catastrophic</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
